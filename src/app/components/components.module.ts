@@ -1,33 +1,34 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NavComponent } from './nav/nav.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+
 import { LandingComponent } from './home/landing/landing.component';
-import { FormComponent } from './form/form.component';
-import { InputComponent } from './elements/input/input.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TransactionsComponent } from './home/transactions/transactions.component';
-import { FooterComponent } from './footer/footer.component';
-
-
+import { FormComponent } from './form/form.component';
+import { BalanceComponent } from './home/balance/balance.component';
+import { InputComponent } from './elements/input/input.component';
 
 @NgModule({
   declarations: [
-    NavComponent,
     LandingComponent,
-    FormComponent,
-    InputComponent,
     TransactionsComponent,
-    FooterComponent
+    FormComponent,
+    BalanceComponent,
+    InputComponent
   ],
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule,
+    RouterModule
   ],
   exports: [
-    NavComponent,
     LandingComponent,
     TransactionsComponent,
-    FooterComponent
+    FormComponent,
+    BalanceComponent,
+    InputComponent
   ]
 })
 export class ComponentsModule { }

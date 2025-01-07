@@ -1,0 +1,70 @@
+@keyframes tilt {
+  0%, 50%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(0.5deg);
+  }
+  75% {
+    transform: rotate(-0.5deg);
+  }
+}
+
+.animate-tilt {
+  animation: tilt 10s infinite linear;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.blur {
+  backdrop-filter: blur(20px);
+}
+
+// Glassmorphism effect
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+// Neon glow effect
+.neon-glow {
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.5),
+              0 0 20px rgba(255, 0, 0, 0.3),
+              0 0 30px rgba(255, 0, 0, 0.1);
+}
+
+// Hover effects
+.hover-scale {
+  transition: transform 0.3s ease;
+  &:hover {
+    transform: scale(1.02);
+  }
+}
+
+// Custom scrollbar
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #ff0000, #800080);
+  border-radius: 4px;
+  &:hover {
+    background: linear-gradient(to bottom, #ff1a1a, #990099);
+  }
+} 

@@ -1,0 +1,117 @@
+<div class="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 p-6">
+  <div class="max-w-4xl mx-auto">
+    <!-- Balance Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+      <!-- User Balance Card -->
+      <div class="relative group">
+        <div class="absolute -inset-0.5 bg-gradient-to-r from-red-600 to-purple-600 rounded-lg blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
+        <div class="relative p-6 bg-black rounded-lg leading-none flex items-center space-x-6">
+          <div class="flex-1">
+            <div class="text-red-500 text-sm">Your Balance</div>
+            <div class="text-white text-3xl font-bold mt-2">
+              {{ balance | number:'1.6-6' }} ETH
+            </div>
+          </div>
+          <div class="w-12 h-12 bg-gradient-to-br from-red-500 to-purple-500 rounded-full flex items-center justify-center">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contract Balance Card -->
+      <div class="relative group">
+        <div class="absolute -inset-0.5 bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
+        <div class="relative p-6 bg-black rounded-lg leading-none flex items-center space-x-6">
+          <div class="flex-1">
+            <div class="text-purple-500 text-sm">Contract Balance</div>
+            <div class="text-white text-3xl font-bold mt-2">
+              {{ contractBalance | number:'1.6-6' }} ETH
+            </div>
+          </div>
+          <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-blue-500 rounded-full flex items-center justify-center">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Operations Section -->
+    <div class="relative group mb-8">
+      <div class="absolute -inset-0.5 bg-gradient-to-r from-red-600 to-blue-600 rounded-lg blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
+      <div class="relative bg-black rounded-lg p-6">
+        <!-- Operation Tabs -->
+        <div class="flex space-x-4 mb-6">
+          <button 
+            *ngFor="let op of operations"
+            (click)="setOperation(op)"
+            [class.bg-gradient-to-r]="selectedOperation === op"
+            [class.from-red-600]="selectedOperation === op"
+            [class.to-purple-600]="selectedOperation === op"
+            [class.text-white]="selectedOperation === op"
+            class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:bg-gray-800"
+            [class.text-gray-400]="selectedOperation !== op"
+          >
+            {{ op | titlecase }}
+          </button>
+        </div>
+
+        <!-- Operation Form -->
+        <form [formGroup]="operationForm" (ngSubmit)="onSubmit()" class="space-y-4">
+          <!-- Amount Input -->
+          <div class="relative">
+            <input 
+              type="number"
+              formControlName="amount"
+              placeholder="Amount in ETH"
+              class="w-full bg-gray-900 text-white rounded-lg px-4 py-3 focus:ring-2 focus:ring-red-500 focus:outline-none"
+              [class.border-red-500]="operationForm.get('amount')?.invalid && operationForm.get('amount')?.touched"
+            >
+            <div class="absolute right-4 top-3 text-gray-400">ETH</div>
+          </div>
+
+          <!-- To Address Input (for transfer) -->
+          <div class="relative" *ngIf="selectedOperation === 'transfer'">
+            <input 
+              type="text"
+              formControlName="toAddress"
+              placeholder="Recipient Address"
+              class="w-full bg-gray-900 text-white rounded-lg px-4 py-3 focus:ring-2 focus:ring-red-500 focus:outline-none"
+              [class.border-red-500]="operationForm.get('toAddress')?.invalid && operationForm.get('toAddress')?.touched"
+            >
+          </div>
+
+          <!-- Private Key Input -->
+          <div class="relative">
+            <input 
+              type="password"
+              formControlName="privateKey"
+              placeholder="Private Key"
+              class="w-full bg-gray-900 text-white rounded-lg px-4 py-3 focus:ring-2 focus:ring-red-500 focus:outline-none"
+              [class.border-red-500]="operationForm.get('privateKey')?.invalid && operationForm.get('privateKey')?.touched"
+            >
+          </div>
+
+          <!-- Submit Button -->
+          <button 
+            type="submit"
+            [disabled]="operationForm.invalid || isLoading"
+            class="w-full bg-gradient-to-r from-red-600 to-purple-600 text-white rounded-lg px-4 py-3 font-medium hover:from-red-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-gray-900 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
+          >
+            <span *ngIf="!isLoading">{{ selectedOperation | titlecase }}</span>
+            <div *ngIf="isLoading" class="flex items-center justify-center">
+              <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              Processing...
+            </div>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div> 
