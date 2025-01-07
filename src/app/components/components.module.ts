@@ -8,6 +8,8 @@ import { TransactionsComponent } from './home/transactions/transactions.componen
 import { FormComponent } from './form/form.component';
 import { BalanceComponent } from './home/balance/balance.component';
 import { InputComponent } from './elements/input/input.component';
+import { NavComponent } from './nav/nav.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +17,9 @@ import { InputComponent } from './elements/input/input.component';
     TransactionsComponent,
     FormComponent,
     BalanceComponent,
-    InputComponent
+    InputComponent,
+    NavComponent,
+    FooterComponent
   ],
   imports: [
     CommonModule,
@@ -28,7 +32,9 @@ import { InputComponent } from './elements/input/input.component';
     TransactionsComponent,
     FormComponent,
     BalanceComponent,
-    InputComponent
+    InputComponent,
+    NavComponent,
+    FooterComponent
   ]
 })
 export class ComponentsModule { }
