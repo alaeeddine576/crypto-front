@@ -1,1 +1,10 @@
+<<<<<<< HEAD
 # crypto-front
+=======
+
+
+
+
+
+
+>>>>>>> master

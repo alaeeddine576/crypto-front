@@ -1,0 +1,40 @@
+<div class="popup flex justify-around items-center">
+    <div class="bg-primaryColor w-[50%]  p-2 rounded-[20px]">
+        <div class="w-full flex flex-end p-4" >
+            <label (click)="closeAlert()" class="cursor-pointer text-white px-2 py-[1px] flex justify-around bg-switchColor rounded-full w-[30px] h-[30px]">x</label>
+        </div>
+
+        <div class="py-[5%] px-[10%]">
+            <form onsubmit="event.preventDefault()">
+                <div class="mt-2">
+                    <app-input
+                     [placeholder]=form.addressTo.placeholder
+                     [formControl]="addressTo"
+                    ></app-input>
+                </div>
+                <div class="mt-6">
+                    <app-input
+                    [placeholder]=form.amount.placeholder
+                    [formControl]="amount"
+                    ></app-input>
+                </div>
+                <div class="mt-6">
+                    <app-input
+                    [placeholder]=form.keyword.placeholder
+                    [formControl]="keyword"
+                    ></app-input>
+                </div>
+                <div class="mt-6">
+                    <app-input
+                    [placeholder]=form.message.placeholder
+                    [formControl]="message"
+                    ></app-input>
+                </div>
+                <div class="my-10">
+                    <button class="p-4 bg-switchColor text-white w-full rounded-full" *ngIf="!loading" (click)="onSubmit()">SEND</button>
+                    <button class="p-4 bg-switchColor text-white w-full rounded-full" *ngIf="loading" >SENDING ...</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
