@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mon-angular-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mon-angular-app
+  template:
+    metadata:
+      labels:
+        app: mon-angular-app
+    spec:
+      imagePullSecrets:
+      - name: docker-registry-secret
+      containers:
+      - name: mon-angular-app
+        image: cypto-exchanger-master-angular-app:latest
+        ports:
+        - containerPort: 80
+        imagePullPolicy: IfNotPresent

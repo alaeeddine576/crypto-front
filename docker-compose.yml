@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+  localstack:
+    image: localstack/localstack
+    ports:
+      - "4510:4566"  # Redirige le port 4510 vers le port API par défaut
+    environment:
+      - SERVICES=s3,lambda,dynamodb  # Services activés
+      - EDGE_PORT=4566  # Définit le port d'API sur 4566 (cela correspond à 4566, le port par défaut de LocalStack)
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"  # Permet l'accès Docker depuis LocalStack
+
+  angular-app:
+    build: .
+    ports:
+      - "8081:80"
+    networks:
+      - localstack
+
+networks:
+  localstack:
+    driver: bridge  # Réseau interne
