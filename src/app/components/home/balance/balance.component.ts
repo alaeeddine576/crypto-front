@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '../../../services/api.service';
-import { CryptoWalletService } from '../../../services/crypto-wallet.service';
+import { ContractService } from '../../../services/contract.service';
 import { HotToastService } from '@ngneat/hot-toast';
 declare let window: any;
 
@@ -23,7 +23,7 @@ export class BalanceComponent implements OnInit {
 
   constructor(
     private apiService: ApiService,
-    private cryptoWalletService: CryptoWalletService,
+    private contractService: ContractService,
     private toast: HotToastService,
     private fb: FormBuilder
   ) {
@@ -55,19 +55,19 @@ export class BalanceComponent implements OnInit {
     try {
       this.isLoading = true;
       const [userBalance, contractBalance] = await Promise.all([
-        this.apiService.getBalance(this.currentAccount).toPromise(),
-        this.apiService.getContractBalance().toPromise()
+        this.contractService.getBalance(this.currentAccount),
+        this.contractService.getContractBalance()
       ]);
 
       // Update user balance
-      if (userBalance !== undefined) {
-        this.balance = userBalance;
+      if (userBalance) {
+        this.balance = Number(userBalance);
         console.log('User balance updated:', this.balance);
       }
 
       // Update contract balance
-      if (contractBalance !== undefined) {
-        this.contractBalance = contractBalance;
+      if (contractBalance) {
+        this.contractBalance = Number(contractBalance);
         console.log('Contract balance updated:', this.contractBalance);
       }
     } catch (error) {
@@ -75,27 +75,6 @@ export class BalanceComponent implements OnInit {
       this.toast.error('Failed to fetch balances');
     } finally {
       this.isLoading = false;
-    }
-  }
-
-  private async getSignedTransaction(operation: OperationType, amount: string, toAddress?: string): Promise<string> {
-    const transactionParameters = {
-      from: this.currentAccount,
-      to: toAddress || this.currentAccount, // If no toAddress, use current account
-      value: '0x' + (Number(amount) * 1e18).toString(16), // Convert ETH to Wei
-      data: '0x' // Optional data field
-    };
-
-    try {
-      // This will trigger MetaMask to show the transaction signing popup
-      const signedTx = await window.ethereum.request({
-        method: 'eth_sendTransaction',
-        params: [transactionParameters],
-      });
-      return signedTx;
-    } catch (error) {
-      console.error('Error signing transaction:', error);
-      throw error;
     }
   }
 
@@ -109,23 +88,29 @@ export class BalanceComponent implements OnInit {
     
     try {
       this.isLoading = true;
-      let response;
-      const signedTransaction = await this.getSignedTransaction(this.selectedOperation, amount, toAddress);
+      let txHash: string;
 
       switch (this.selectedOperation) {
         case 'deposit':
-          response = await this.apiService.deposit(signedTransaction, amount).toPromise();
+          txHash = await this.contractService.deposit(amount);
           break;
         case 'withdraw':
-          response = await this.apiService.withdraw(signedTransaction, amount).toPromise();
+          txHash = await this.contractService.withdraw(amount);
           break;
         case 'transfer':
           if (!toAddress) {
             this.toast.error('Please provide a recipient address');
             return;
           }
-          response = await this.apiService.transfer(signedTransaction, toAddress, amount).toPromise();
+          txHash = await this.contractService.transfer(toAddress, amount);
           break;
+      }
+
+      // Send the signed transaction to the API
+      if (this.selectedOperation === 'transfer') {
+        await this.apiService.transfer(txHash, toAddress!, amount).toPromise();
+      } else {
+        await this.apiService[this.selectedOperation](txHash, amount).toPromise();
       }
 
       this.toast.success(`${this.selectedOperation} successful!`);
