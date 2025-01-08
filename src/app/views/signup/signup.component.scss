@@ -1,1 +1,101 @@
 // Styles are handled by Tailwind CSS 
+
+.bg-auth {
+  background-image: url('../../../assets/images/background-login.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, rgba(76, 29, 149, 0.7), rgba(124, 58, 237, 0.7));
+    backdrop-filter: blur(5px);
+  }
+}
+
+:host {
+  display: block;
+  min-height: 100vh;
+} 
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(76, 29, 149, 0.3);
+}
+
+.neon-border {
+  position: relative;
+  &::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #7c3aed, #4c1d95);
+    border-radius: inherit;
+    z-index: -1;
+    animation: neonGlow 3s ease-in-out infinite;
+  }
+}
+
+.cyber-input {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(124, 58, 237, 0.3);
+  backdrop-filter: blur(5px);
+  transition: all 0.3s ease;
+  
+  &:focus {
+    border-color: #7c3aed;
+    box-shadow: 0 0 15px rgba(124, 58, 237, 0.5);
+  }
+}
+
+@keyframes neonGlow {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.futuristic-button {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #7c3aed, #4c1d95);
+    z-index: -1;
+    animation: borderRotate 4s linear infinite;
+  }
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px rgba(124, 58, 237, 0.6);
+  }
+}
+
+@keyframes borderRotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+} 

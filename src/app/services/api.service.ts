@@ -96,6 +96,7 @@ export class ApiService {
 
   public transfer(signedTransaction: string, toAddress: string, amountInEther: number): Observable<any> {
     const checksumToAddress = this.toChecksumAddress(toAddress);
+    console.log("signedTransaction", signedTransaction);
     return this.http.post(`${this.baseUrl}/transfer`, {
       signed_transaction: signedTransaction,
       to_address: checksumToAddress,

@@ -1,1 +1,90 @@
 // Styles are handled by Tailwind CSS 
+
+.bg-auth {
+  background-image: url('../../../assets/images/background-login.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+:host {
+  display: block;
+  min-height: 100vh;
+} 
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px rgba(15, 23, 42, 0.3);
+}
+
+.neon-border {
+  position: relative;
+  &::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg,  #19022f, #030e2c);
+    border-radius: inherit;
+    z-index: -1;
+    animation: neonGlow 3s ease-in-out infinite;
+  }
+}
+
+.cyber-input {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  backdrop-filter: blur(5px);
+  transition: all 0.3s ease;
+  
+  &:focus {
+    border-color: #7387a7;
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+  }
+}
+
+@keyframes neonGlow {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.futuristic-button {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #3b82f6, #1d4ed8);
+    z-index: -1;
+    animation: borderRotate 4s linear infinite;
+  }
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px rgba(0, 7, 19, 0.6);
+  }
+}
+
+@keyframes borderRotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+} 

@@ -1,30 +1,29 @@
-<div class="min-h-screen bg-gradient-to-br from-red-600 to-red-900 py-6 flex flex-col justify-center sm:py-12">
-  <div class="relative py-3 sm:max-w-xl sm:mx-auto">
-    <div class="absolute inset-0 bg-gradient-to-r from-red-400 to-red-800 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
-    <div class="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
+<div class="min-h-screen bg-auth py-6 flex flex-col justify-center sm:py-12 relative">
+  <div class="relative py-3 sm:max-w-xl sm:mx-auto z-10">
+    <div class="glass-card neon-border relative px-4 py-10 shadow-lg sm:rounded-3xl sm:p-20">
       <div class="max-w-md mx-auto">
-        <div class="divide-y divide-gray-200">
-          <div class="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
-            <div class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-red-900 mb-8">
-              Create Your Account
+        <div class="divide-y divide-violet-200">
+          <div class="py-8 text-base leading-6 space-y-4 text-white sm:text-lg sm:leading-7">
+            <div class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-violet-300 to-violet-100 mb-8 text-center">
+              Initialize New Identity
             </div>
 
             <!-- Wallet Connection -->
             <div class="mb-8">
               <div class="flex items-center justify-between mb-4">
-                <span class="text-gray-600 text-sm">Wallet Status</span>
+                <span class="text-violet-200 text-sm">Neural Link Status</span>
                 <button 
                   (click)="connectWallet()"
                   [disabled]="!!walletAddress"
-                  class="px-4 py-2 bg-gradient-to-r from-red-500 to-red-700 text-white rounded-lg hover:from-red-600 hover:to-red-800 transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                  class="futuristic-button px-6 py-2 bg-violet-900/30 text-violet-100 rounded-lg transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 backdrop-blur-sm"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd" d="M17.778 8.222c-4.296-4.296-11.26-4.296-15.556 0A1 1 0 01.808 6.808c5.076-5.077 13.308-5.077 18.384 0a1 1 0 01-1.414 1.414zM14.95 11.05a7 7 0 00-9.9 0 1 1 0 01-1.414-1.414 9 9 0 0112.728 0 1 1 0 01-1.414 1.414zM12.12 13.88a3 3 0 00-4.242 0 1 1 0 01-1.415-1.415 5 5 0 017.072 0 1 1 0 01-1.415 1.415zM9 16a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
                   </svg>
-                  {{ walletAddress ? 'Wallet Connected' : 'Connect Wallet' }}
+                  {{ walletAddress ? 'Neural Link Active' : 'Initialize Link' }}
                 </button>
               </div>
-              <div *ngIf="walletAddress" class="text-sm text-gray-500 break-all bg-gray-50 p-3 rounded-lg">
+              <div *ngIf="walletAddress" class="text-sm text-violet-200 break-all bg-violet-900/20 p-4 rounded-lg backdrop-blur-sm border border-violet-500/30">
                 {{ walletAddress }}
               </div>
             </div>
@@ -33,31 +32,31 @@
             <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="space-y-6">
               <!-- Full Name -->
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                <label class="block text-sm font-medium text-violet-200 mb-1">Identity Name</label>
                 <div class="relative">
                   <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-violet-400" viewBox="0 0 20 20" fill="currentColor">
                       <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
                     </svg>
                   </div>
                   <input 
                     type="text" 
                     formControlName="fullName"
-                    class="pl-10 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500"
-                    [ngClass]="{'border-red-500': signupForm.get('fullName')?.invalid && signupForm.get('fullName')?.touched}"
+                    class="cyber-input pl-10 block w-full rounded-lg text-violet-100 bg-violet-900/20 focus:ring-2 focus:ring-violet-500"
+                    [ngClass]="{'border-violet-500': signupForm.get('fullName')?.invalid && signupForm.get('fullName')?.touched}"
                   >
                 </div>
-                <p *ngIf="signupForm.get('fullName')?.invalid && signupForm.get('fullName')?.touched" class="mt-1 text-sm text-red-500">
-                  Full name is required (min 3 characters)
+                <p *ngIf="signupForm.get('fullName')?.invalid && signupForm.get('fullName')?.touched" class="mt-1 text-sm text-violet-300">
+                  Identity name required (min 3 characters)
                 </p>
               </div>
 
               <!-- Email -->
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                <label class="block text-sm font-medium text-violet-200 mb-1">Neural ID</label>
                 <div class="relative">
                   <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-violet-400" viewBox="0 0 20 20" fill="currentColor">
                       <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
                       <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
                     </svg>
@@ -65,54 +64,54 @@
                   <input 
                     type="email" 
                     formControlName="email"
-                    class="pl-10 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500"
-                    [ngClass]="{'border-red-500': signupForm.get('email')?.invalid && signupForm.get('email')?.touched}"
+                    class="cyber-input pl-10 block w-full rounded-lg text-violet-100 bg-violet-900/20 focus:ring-2 focus:ring-violet-500"
+                    [ngClass]="{'border-violet-500': signupForm.get('email')?.invalid && signupForm.get('email')?.touched}"
                   >
                 </div>
-                <p *ngIf="signupForm.get('email')?.invalid && signupForm.get('email')?.touched" class="mt-1 text-sm text-red-500">
-                  Please enter a valid email address
+                <p *ngIf="signupForm.get('email')?.invalid && signupForm.get('email')?.touched" class="mt-1 text-sm text-violet-300">
+                  Invalid Neural ID format
                 </p>
               </div>
 
               <!-- Password -->
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                <label class="block text-sm font-medium text-violet-200 mb-1">Access Key</label>
                 <div class="relative">
                   <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-violet-400" viewBox="0 0 20 20" fill="currentColor">
                       <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
                     </svg>
                   </div>
                   <input 
                     type="password" 
                     formControlName="password"
-                    class="pl-10 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500"
-                    [ngClass]="{'border-red-500': signupForm.get('password')?.invalid && signupForm.get('password')?.touched}"
+                    class="cyber-input pl-10 block w-full rounded-lg text-violet-100 bg-violet-900/20 focus:ring-2 focus:ring-violet-500"
+                    [ngClass]="{'border-violet-500': signupForm.get('password')?.invalid && signupForm.get('password')?.touched}"
                   >
                 </div>
-                <p *ngIf="signupForm.get('password')?.invalid && signupForm.get('password')?.touched" class="mt-1 text-sm text-red-500">
-                  Password must be at least 6 characters
+                <p *ngIf="signupForm.get('password')?.invalid && signupForm.get('password')?.touched" class="mt-1 text-sm text-violet-300">
+                  Access key must be at least 6 characters
                 </p>
               </div>
 
               <!-- Confirm Password -->
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Confirm Password</label>
+                <label class="block text-sm font-medium text-violet-200 mb-1">Confirm Access Key</label>
                 <div class="relative">
                   <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-violet-400" viewBox="0 0 20 20" fill="currentColor">
                       <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
                     </svg>
                   </div>
                   <input 
                     type="password" 
                     formControlName="confirmPassword"
-                    class="pl-10 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500"
-                    [ngClass]="{'border-red-500': signupForm.errors?.['mismatch'] && signupForm.get('confirmPassword')?.touched}"
+                    class="cyber-input pl-10 block w-full rounded-lg text-violet-100 bg-violet-900/20 focus:ring-2 focus:ring-violet-500"
+                    [ngClass]="{'border-violet-500': signupForm.errors?.['mismatch'] && signupForm.get('confirmPassword')?.touched}"
                   >
                 </div>
-                <p *ngIf="signupForm.errors?.['mismatch'] && signupForm.get('confirmPassword')?.touched" class="mt-1 text-sm text-red-500">
-                  Passwords do not match
+                <p *ngIf="signupForm.errors?.['mismatch'] && signupForm.get('confirmPassword')?.touched" class="mt-1 text-sm text-violet-300">
+                  Access keys do not match
                 </p>
               </div>
 
@@ -121,22 +120,22 @@
                 <button 
                   type="submit"
                   [disabled]="signupForm.invalid || !walletAddress || isLoading"
-                  class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-red-500 to-red-700 hover:from-red-600 hover:to-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                  class="futuristic-button w-full flex justify-center py-3 px-4 text-sm font-medium text-violet-100 bg-violet-900/30 rounded-lg backdrop-blur-sm"
                 >
-                  <svg *ngIf="isLoading" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <svg *ngIf="isLoading" class="animate-spin -ml-1 mr-3 h-5 w-5 text-violet-100" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                   </svg>
-                  {{ isLoading ? 'Creating Account...' : 'Create Account' }}
+                  {{ isLoading ? 'Initializing Identity...' : 'Create Identity' }}
                 </button>
               </div>
             </form>
 
             <!-- Login Link -->
             <div class="text-center mt-6">
-              <p class="text-sm text-gray-600">
-                Already have an account? 
-                <a routerLink="/login" class="font-medium text-red-600 hover:text-red-500">Login</a>
+              <p class="text-sm text-violet-200">
+                Already authorized? 
+                <a routerLink="/login" class="font-medium text-violet-300 hover:text-violet-100 transition-colors">Access System</a>
               </p>
             </div>
           </div>
