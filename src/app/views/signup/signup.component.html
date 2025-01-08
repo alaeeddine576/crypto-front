@@ -5,22 +5,22 @@
         <div class="divide-y divide-violet-200">
           <div class="py-8 text-base leading-6 space-y-4 text-white sm:text-lg sm:leading-7">
             <div class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-violet-300 to-violet-100 mb-8 text-center">
-              Initialize New Identity
+              Register New Identity
             </div>
 
             <!-- Wallet Connection -->
             <div class="mb-8">
               <div class="flex items-center justify-between mb-4">
-                <span class="text-violet-200 text-sm">Neural Link Status</span>
+                <span class="text-violet-200 text-sm">Wallet connection</span>
                 <button 
                   (click)="connectWallet()"
                   [disabled]="!!walletAddress"
-                  class="futuristic-button px-6 py-2 bg-violet-900/30 text-violet-100 rounded-lg transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 backdrop-blur-sm"
+                  class="futuristic-button px-6 ml-2 py-2 bg-violet-900/30 text-violet-100 rounded-lg transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 backdrop-blur-sm"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd" d="M17.778 8.222c-4.296-4.296-11.26-4.296-15.556 0A1 1 0 01.808 6.808c5.076-5.077 13.308-5.077 18.384 0a1 1 0 01-1.414 1.414zM14.95 11.05a7 7 0 00-9.9 0 1 1 0 01-1.414-1.414 9 9 0 0112.728 0 1 1 0 01-1.414 1.414zM12.12 13.88a3 3 0 00-4.242 0 1 1 0 01-1.415-1.415 5 5 0 017.072 0 1 1 0 01-1.415 1.415zM9 16a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
                   </svg>
-                  {{ walletAddress ? 'Neural Link Active' : 'Initialize Link' }}
+                  {{ walletAddress ? 'Connected' : 'Connect Wallet' }}
                 </button>
               </div>
               <div *ngIf="walletAddress" class="text-sm text-violet-200 break-all bg-violet-900/20 p-4 rounded-lg backdrop-blur-sm border border-violet-500/30">
@@ -53,7 +53,7 @@
 
               <!-- Email -->
               <div>
-                <label class="block text-sm font-medium text-violet-200 mb-1">Neural ID</label>
+                <label class="block text-sm font-medium text-violet-200 mb-1">Login</label>
                 <div class="relative">
                   <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-violet-400" viewBox="0 0 20 20" fill="currentColor">
@@ -75,7 +75,7 @@
 
               <!-- Password -->
               <div>
-                <label class="block text-sm font-medium text-violet-200 mb-1">Access Key</label>
+                <label class="block text-sm font-medium text-violet-200 mb-1">Password</label>
                 <div class="relative">
                   <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-violet-400" viewBox="0 0 20 20" fill="currentColor">
@@ -96,7 +96,7 @@
 
               <!-- Confirm Password -->
               <div>
-                <label class="block text-sm font-medium text-violet-200 mb-1">Confirm Access Key</label>
+                <label class="block text-sm font-medium text-violet-200 mb-1">Confirm Password</label>
                 <div class="relative">
                   <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-violet-400" viewBox="0 0 20 20" fill="currentColor">
