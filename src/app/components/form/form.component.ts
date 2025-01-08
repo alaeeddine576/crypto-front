@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Transaction } from 'src/app/types/transaction';;
-import { CryptoWalletService } from 'src/app/services/crypto-wallet.service';
+import { Transaction } from '../../types/transaction';
+import { CryptoWalletService } from '../../services/crypto-wallet.service';
 
 @Component({
   selector: 'app-form',

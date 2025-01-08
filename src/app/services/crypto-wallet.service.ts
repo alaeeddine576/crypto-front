@@ -87,13 +87,8 @@ export class CryptoWalletService {
         }]
       });
 
-      // Record the transaction in your backend
-      const result = await firstValueFrom(this.apiService.sendTransaction(transaction));
-      
-      if (result) {
-        this.toastService.success("Transaction sent successfully");
-      }
-      return result;
+      this.toastService.success("Transaction sent successfully");
+      return true;
     } catch (e: any) {
       // Only show error toast for non-user rejections
       if (e.code !== 4001) {

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CryptoWalletService } from 'src/app/services/crypto-wallet.service';
+import { CryptoWalletService } from '../../services/crypto-wallet.service';
 import { Router } from '@angular/router';
 import { HotToastService } from '@ngneat/hot-toast';
 

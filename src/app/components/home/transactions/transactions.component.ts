@@ -13,6 +13,11 @@ export class TransactionsComponent implements OnInit {
   public isLoading: boolean = true;
   public error: string | null = null;
 
+  // Pagination
+  currentPage: number = 1;
+  pageSize: number = 5;
+  totalPages: number = 0;
+
   constructor(private readonly apiService: ApiService) { }
 
   public formatAddress = formatAddress;
@@ -44,5 +49,43 @@ export class TransactionsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getTransactions();
+  }
+
+  get paginatedTransactions(): TransactionResponse[] {
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    return this.transactions.slice(startIndex, endIndex);
+  }
+
+  get startIndex(): number {
+    return (this.currentPage - 1) * this.pageSize;
+  }
+
+  get endIndex(): number {
+    const end = this.startIndex + this.pageSize;
+    return end > this.transactions.length ? this.transactions.length : end;
+  }
+
+  previousPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+    }
+  }
+
+  nextPage(): void {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+    }
+  }
+
+  goToPage(page: number): void {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+    }
+  }
+
+  getPageNumbers(): number[] {
+    this.totalPages = Math.ceil(this.transactions.length / this.pageSize);
+    return Array.from({ length: this.totalPages }, (_, i) => i + 1);
   }
 }

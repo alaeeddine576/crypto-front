@@ -10,6 +10,7 @@ import { BalanceComponent } from './home/balance/balance.component';
 import { InputComponent } from './elements/input/input.component';
 import { NavComponent } from './nav/nav.component';
 import { FooterComponent } from './footer/footer.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { FooterComponent } from './footer/footer.component';
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
-    RouterModule
+    RouterModule,
+    HttpClientModule
   ],
   exports: [
     LandingComponent,

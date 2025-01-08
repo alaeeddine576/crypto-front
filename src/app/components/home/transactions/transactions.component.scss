@@ -17,3 +17,10 @@
     padding: 30px;
     height: 50px;
 }
+
+.bg-image {
+    background-image: url("../../../../assets/images/landing-bg.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}

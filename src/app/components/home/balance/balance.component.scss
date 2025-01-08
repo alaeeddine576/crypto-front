@@ -3,10 +3,10 @@
     transform: rotate(0deg);
   }
   25% {
-    transform: rotate(0.5deg);
+    transform: rotate(1deg);
   }
   75% {
-    transform: rotate(-0.5deg);
+    transform: rotate(-1deg);
   }
 }
 
@@ -67,4 +67,9 @@ input[type="number"] {
   &:hover {
     background: linear-gradient(to bottom, #ff1a1a, #990099);
   }
-} 
+}
+
+.bg-image {
+  background-image: url("../../../../assets/images/landing-bg.png");
+}
+

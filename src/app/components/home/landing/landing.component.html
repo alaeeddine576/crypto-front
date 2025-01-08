@@ -6,18 +6,6 @@
 
         <div class="w-[60%]">
             <h1 class="text-[4em] text-center text-white font-extrabold">Next Generation Crypto Trading</h1>
-            <div class="w-full flex justify-around mt-10">
-                <button class="bg-switchColor text-white p-4 rounded-full w-[60%]"
-                *ngIf="!account"
-                (click)="onConnectWallet()"
-                >CONNECT WALLET</button>
-
-                <button class="bg-switchColor text-white p-4 rounded-full w-[60%]"
-                *ngIf="account"
-                (click) = "onShowModal()"
-                >SEND ETHEREUM</button>
-            </div>
-
             <div class="flex justify-around mt-20">
                 <div class="flex  gap-10">
                     <div class="flex gap-2 items-center">
@@ -49,5 +37,6 @@
         <img src="../../../../assets/images/Etherium-2.png" al="crypto coin" draggable="false">
     </div>
 </div>  
+
 
 <app-form *ngIf="showModal"  (triggerAlert)="onShowModal()"></app-form>

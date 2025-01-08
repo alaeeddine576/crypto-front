@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Transaction } from '../types/transaction';
 import { Observable } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
+import { ethers } from 'ethers';
 
 export interface TransactionResponse {
   from: string;
@@ -17,8 +17,11 @@ interface TransactionsApiResponse {
 }
 
 interface BalanceResponse {
-  balance: number;
-  contractBalance: number;
+  balance_eth: number;
+}
+
+interface ContractBalanceResponse {
+  contract_balance_eth: number;
 }
 
 @Injectable({
@@ -29,8 +32,19 @@ export class ApiService {
 
   constructor(private http: HttpClient) {}
 
-  public getBalance(address: string): Observable<BalanceResponse> {
-    return this.http.post<BalanceResponse>(`${this.baseUrl}/balance`, { address }).pipe(
+  private toChecksumAddress(address: string): string {
+    try {
+      return ethers.utils.getAddress(address);
+    } catch (error) {
+      console.error('Invalid address format:', error);
+      throw new Error('Invalid Ethereum address format');
+    }
+  }
+
+  public getBalance(address: string): Observable<number> {
+    const checksumAddress = this.toChecksumAddress(address);
+    return this.http.post<BalanceResponse>(`${this.baseUrl}/balance`, { address: checksumAddress }).pipe(
+      map(response => response.balance_eth),
       tap(response => console.log('Balance response:', response)),
       catchError(error => {
         console.error('Get balance error:', error);
@@ -39,9 +53,24 @@ export class ApiService {
     );
   }
 
-  public deposit(privateKey: string, amountInEther: number): Observable<any> {
+  public getContractBalance(): Observable<number> {
+    return this.http.post<ContractBalanceResponse>(`${this.baseUrl}/contract-balance`, {}).pipe(
+      map(response => {
+        // Parse scientific notation to a regular decimal number
+        const balance = Number(response.contract_balance_eth);
+        return parseFloat(balance.toFixed(18)); // Convert to fixed decimal places
+      }),
+      tap(response => console.log('Contract balance response:', response)),
+      catchError(error => {
+        console.error('Get contract balance error:', error);
+        throw error;
+      })
+    );
+  }
+
+  public deposit(signedTransaction: string, amountInEther: number): Observable<any> {
     return this.http.post(`${this.baseUrl}/deposit`, {
-      private_key: privateKey,
+      signed_transaction: signedTransaction,
       amount_in_ether: amountInEther
     }).pipe(
       tap(response => console.log('Deposit response:', response)),
@@ -52,9 +81,9 @@ export class ApiService {
     );
   }
 
-  public withdraw(privateKey: string, amountInEther: number): Observable<any> {
+  public withdraw(signedTransaction: string, amountInEther: number): Observable<any> {
     return this.http.post(`${this.baseUrl}/withdraw`, {
-      private_key: privateKey,
+      signed_transaction: signedTransaction,
       amount_in_ether: amountInEther
     }).pipe(
       tap(response => console.log('Withdraw response:', response)),
@@ -65,10 +94,11 @@ export class ApiService {
     );
   }
 
-  public transfer(privateKey: string, toAddress: string, amountInEther: number): Observable<any> {
+  public transfer(signedTransaction: string, toAddress: string, amountInEther: number): Observable<any> {
+    const checksumToAddress = this.toChecksumAddress(toAddress);
     return this.http.post(`${this.baseUrl}/transfer`, {
-      private_key: privateKey,
-      to_address: toAddress,
+      signed_transaction: signedTransaction,
+      to_address: checksumToAddress,
       amount_in_ether: amountInEther
     }).pipe(
       tap(response => console.log('Transfer response:', response)),
@@ -79,26 +109,7 @@ export class ApiService {
     );
   }
 
-  public connectWallet(): Observable<string[]> {
-    return this.http.post<string[]>(`${this.baseUrl}/wallet/connect`, null).pipe(
-      catchError(error => {
-        console.error('Wallet connection error:', error);
-        throw error;
-      })
-    );
-  }
-
-  public checkWalletConnection(): Observable<string[]> {
-    return this.http.get<string[]>(`${this.baseUrl}/wallet/status`).pipe(
-      catchError(error => {
-        console.error('Wallet status check error:', error);
-        throw error;
-      })
-    );
-  }
-
   public getAllTransactions(): Observable<TransactionResponse[]> {
-    console.log('Fetching transactions from:', `${this.baseUrl}/transactions`);
     return this.http.get<TransactionsApiResponse>(`${this.baseUrl}/transactions`).pipe(
       tap(response => {
         console.log('Raw API Response:', response);
@@ -115,15 +126,6 @@ export class ApiService {
           message: error.message,
           error: error.error
         });
-        throw error;
-      })
-    );
-  }
-
-  public sendTransaction(transaction: Transaction): Observable<boolean> {
-    return this.http.post<boolean>(`${this.baseUrl}/transaction`, null).pipe(
-      catchError(error => {
-        console.error('Send transaction error:', error);
         throw error;
       })
     );

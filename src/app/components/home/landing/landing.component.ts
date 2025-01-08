@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CryptoWalletService } from 'src/app/services/crypto-wallet.service';
+import { CryptoWalletService } from '../../../services/crypto-wallet.service';
 
 @Component({
   selector: 'app-landing',
